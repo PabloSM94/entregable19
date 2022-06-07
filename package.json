@@ -1,0 +1,19 @@
+{
+    "type": "module",
+    "name": "6",
+    "lockfileVersion": 2,
+    "requires": true,
+    "main": "servidor.js",
+    "scripts": {
+        "start": "nodemon servidor.js"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^7.2.0",
+        "connect-mongo": "^4.6.0",
+        "cookie-parser": "^1.4.6",
+        "express": "^4.18.1",
+        "express-session": "^1.17.3",
+        "nodemon": "^2.0.16",
+        "socket.io": "^4.5.1"
+    }
+}
