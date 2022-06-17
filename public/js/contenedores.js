@@ -1,4 +1,4 @@
-const buildMensaje = class {
+export const buildMensaje = class {
     constructor(id,nombre,apellido,edad,alias,avatar,text){
         this.id = id
         this.nombre = nombre
@@ -21,4 +21,10 @@ const buildMensaje = class {
     }
 }
 
-export default buildMensaje
+export const cObjeto = class {
+    constructor (title, price, thumbnail){
+        this.title = title
+        this.price = price
+        this.thumbnail = thumbnail
+    }
+}

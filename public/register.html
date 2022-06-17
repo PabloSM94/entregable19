@@ -17,13 +17,25 @@
 
 <body class="text-light bg-dark">
 
-    <h1>API de Productos - Entrar/Registrarte</h1>
-    <div>
-        <button id="botonLogin" class="btn btn-primary">Login</button>
-        <button id="botonRegister" class="btn btn-primary">Register</button>
-    </div>
-
+    <h1>API de Productos - Register</h1>
+    <div id="register"></div>
+    <form class="row gx-4 gy-4">
+        <div class="entradas col-md-4">
+            <input id="inputUsername" class="form-control" type="text" name="username" placeholder="Username - Email">
+        </div>
+        <div class="entradas col-md-4">
+            <input id="inputPassword" class="form-control" type="password" name="password" placeholder="Contraseña">
+        </div>
+        <br>
+        <div class="col-12 justify-items-center">
+            <button id="botonRegistrar" class="btn btn-primary">Registrarse</button>
+            <button id="botonLogin" class="btn btn-primary">Ir a Login</button>
+        </div>
+    </form>
     <script src="js/decision.js"></script>
+    <script src="js/registro.js"></script>
+    
+
 
 
 </body>

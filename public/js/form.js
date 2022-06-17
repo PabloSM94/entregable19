@@ -1,11 +1,12 @@
- //ejecución de handlebars
- const campos = [
-    {nombreCampo: "Nombre Producto", type:"text", name:"title"},
-    {nombreCampo: "Precio", type:"number", name:"price"},
-    {nombreCampo: "URL Imagen", type:"text", name:"thumbnail"}
-]
+//  //ejecución de handlebars
+//  const campos = [
+//     {nombreCampo: "Nombre Producto", type:"text", name:"title"},
+//     {nombreCampo: "Precio", type:"number", name:"price"},
+//     {nombreCampo: "URL Imagen", type:"text", name:"thumbnail"}
+// ]
 
-const renderForm = Handlebars.compile(`<h2>Ingrese nuevo producto</h2>
+export function renderizarFormulario(campos,title,id){
+    const renderForm = Handlebars.compile(`<h2>${title}</h2>
     <br>
     <div class="principal">
         <form class="row gx-4 gy-4">
@@ -16,10 +17,11 @@ const renderForm = Handlebars.compile(`<h2>Ingrese nuevo producto</h2>
             {{/each}}
             <br>
             <div class="col-12 justify-items-center">
-                <button id="botonEnviar" class="btn btn-primary">Cargar</button>
+                <button id="boton${title}" class="btn btn-primary">${title}</button>
             </div>
         </form>
     </div>`)
-document.getElementById("insForm").innerHTML = renderForm({
+document.getElementById(`${id}`).innerHTML = renderForm({
     productos: campos
 })   
+}

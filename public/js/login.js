@@ -1,23 +1,25 @@
- //ejecución de handlebars
+import { renderizarFormulario } from "./form.js"
  const camposlog = [
     {nombreCampo: "Nombre", type:"text", name:"nombre"},
 ]
 
-const renderForm2 = Handlebars.compile(`<h2>Login</h2>
-    <br>
-    <div class="principal">
-        <form class="row gx-4 gy-4">
-            {{#each productos}}
-            <div class="entradas col-md-4">
-                <input id="input{{this.name}}" class="form-control" type="{{this.type}}" name="{{this.name}}" placeholder="{{this.nombreCampo}}">
-            </div>
-            {{/each}}
-            <br>
-            <div>
-                <button id="botonLogin" class="btn btn-primary">Login</button>
-            </div>
-        </form>
-    </div>`)
+
+
+// const renderForm2 = Handlebars.compile(`<h2>Login</h2>
+//     <br>
+//     <div class="principal">
+//         <form class="row gx-4 gy-4">
+//             {{#each productos}}
+//             <div class="entradas col-md-4">
+//                 <input id="input{{this.name}}" class="form-control" type="{{this.type}}" name="{{this.name}}" placeholder="{{this.nombreCampo}}">
+//             </div>
+//             {{/each}}
+//             <br>
+//             <div>
+//                 <button id="botonLogin" class="btn btn-primary">Login</button>
+//             </div>
+//         </form>
+//     </div>`)
 
 
 
@@ -25,19 +27,25 @@ fetch('/log')
 .then(res => res.json())
 .then(data => {
     if(data.status !== "ok"){
-    document.getElementById("login").innerHTML = renderForm2({productos: camposlog})}
+        console.log("ok renderizar")
+    
+    }
     else{
-    // document.getElementById("login").innerHTML =(`<h2>Bienvenido ${data.name}</h2>`)
-    const renderForm2 = Handlebars.compile(`<h2>Bienvenido ${data.name}</h2>
-        <br>
-        <div class="principal">
-            <form class="row gx-4 gy-4">
-                <div>
-                    <button id="botonLogout" class="btn btn-primary">Logout</button>
-                </div>
-            </form>
-        </div>`)
-        document.getElementById("login").innerHTML = renderForm2({})
+    const renderForm = Handlebars.compile(`
+    <h1>API de Productos</h1>
+    
+    <div id="insForm"></div>
+    <br>
+    <div id="listaProd"></div>
+    <br>
+    <div id="chat"></div>
+
+
+    <script type="module" src="js/form.js"></script>
+    <script type="module" src="js/chat.js"></script>
+    <script type="module" src="js/index.js"></script>
+    `)
+    document.getElementById(`body`).innerHTML = renderForm({})   
         const botonLogout = document.getElementById("botonLogout")
         botonLogout.addEventListener("click",e=>{
             

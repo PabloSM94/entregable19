@@ -1,4 +1,4 @@
-function mostrarProductos(input){
+export function mostrarProductos(input){
     const renderTabla = Handlebars.compile(`<h2>Listado de productos</h2>
     <div class="tabla">
     <table class="table">
