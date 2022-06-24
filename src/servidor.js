@@ -1,3 +1,19 @@
+//Dotenv
+import 'dotenv/config'
+import x from 'yargs/yargs'
+const yargs = x(process.argv.slice(2))
+const argv = yargs
+    .alias({
+        p: 'port'
+    })
+    .default({
+        port: 8080
+    })
+    .argv
+
+import { fork } from 'child_process'
+
+
 import express from 'express'
 import fs from 'fs'
 import {  Server as HttpServer  } from 'http'
@@ -19,20 +35,22 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 import passport from 'passport'
 import {  Strategy as LocalStrategy} from 'passport-local'
 
+
+
+
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
 
-const PORT = 8080
+const PORT = argv.port
 
 app.use(express.urlencoded({extended: true})) //Formularios
 app.use(express.json()) //JSON
 
-
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://pablosm94:coderhouse@clusterpm.2bebn.mongodb.net/sessions',
+        mongoUrl: `mongodb+srv://${process.env.USER_BD}:${process.env.PASS_BD}@clusterpm.2bebn.mongodb.net/sessions`,
         mongoOptions: advancedOptions
     }),
     secret: 'mongoAtlasSecret',
@@ -282,4 +300,48 @@ io.on('connection', (socket)=>{
 
 })
 
-//////////////////////////--- Base de datos
+//----------Variables de entorno--------------
+app.get('/info', (req,res)=>{
+    let datos = []
+    //Argumentos de entrarada
+    datos.push({argumentosEntrada: argv})
+    //nombre de la plataforma (SO)
+    datos.push({nombrePlataforma: process.env.OS})
+    //Version de nodejs
+    datos.push({nodeJSVersion: process.versions.node})
+    //Memoria total reservada (Rss)
+    datos.push({memoriaReservada: process.memoryUsage().rss})
+    //path de ejecucion
+    datos.push({pathEjecucion: process.env.Path})
+    //processid
+    datos.push({processID: process.pid})
+    //Carpeta del proyecto
+    datos.push({carpetadeProyecto: process.argv[1]})
+
+    res.send(datos)
+})
+
+app.get('/api/randoms', (req,res)=>{
+    let cantidad
+    if (req.query.cant){
+        cantidad = req.query.cant
+    }else{
+        cantidad = 100000000
+    }
+    
+    const calculo = fork('./random.js')
+    
+    calculo.on('message', data => {
+        if (data=="Listo para recibir"){
+            calculo.send(cantidad)
+        }
+        else{
+            res.end(JSON.stringify(data))
+        }
+        console.log(data)
+    })
+
+    
+
+})
+
