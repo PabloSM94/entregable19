@@ -471,6 +471,10 @@ const logger = winston.createLogger({
     ]
 })
 
+app.get('/',(req,res)=>{
+    res.send('Bienvenido a la API')
+})
+
 app.all('*',(req,res)=>{
     const {url , method} = req
     logger.info(`Peticion ${url}, metodo ${method}`)
@@ -478,6 +482,3 @@ app.all('*',(req,res)=>{
     res.send("Ruta inexistente")
 })
 
-app.get('/',(req,res)=>{
-    res.send('Bienvenido a la API')
-})
