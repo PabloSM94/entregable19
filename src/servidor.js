@@ -8,7 +8,7 @@ const argv = yargs
         m: 'modo'
     })
     .default({
-        port: 8080,
+        port: 80,
         modo: 'FORK'
     })
     .argv
