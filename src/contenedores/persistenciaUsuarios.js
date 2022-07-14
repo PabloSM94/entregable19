@@ -8,6 +8,7 @@ import config from '../config.js'
 await client.connect();
 
 async function validarUsuarios(useraValidar){
+    console.log("a validar...")
     const database = client.db("users");
     const usuarios = database.collection("users")
     const datos = await usuarios.find({username: `${useraValidar}`}).toArray()

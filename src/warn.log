@@ -1,0 +1,5 @@
+
+{"level":"error","message":"Fallo en el registro"}
+{"level":"warn","message":"Ruta /login inexistente"}
+{"level":"error","message":"Login fallido"}
+{"level":"warn","message":"Ruta /hola inexistente"}

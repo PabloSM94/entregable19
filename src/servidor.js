@@ -4,10 +4,12 @@ import x from 'yargs/yargs'
 const yargs = x(process.argv.slice(2))
 const argv = yargs
     .alias({
-        p: 'port'
+        p: 'port',
+        m: 'modo'
     })
     .default({
-        port: 8080
+        port: 8080,
+        modo: 'FORK'
     })
     .argv
 
@@ -15,6 +17,9 @@ import { fork } from 'child_process'
 
 
 import express from 'express'
+//Gzip
+import compression from 'compression'
+
 import fs from 'fs'
 import {  Server as HttpServer  } from 'http'
 import {  Server as IOServer } from 'socket.io'
@@ -35,7 +40,16 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 import passport from 'passport'
 import {  Strategy as LocalStrategy} from 'passport-local'
 
+//Clusters
 
+import cluster from 'cluster'
+import os from 'os'
+const numCPUs = os.cpus().length
+
+
+
+
+console.log(numCPUs,argv.modo)
 
 
 const app = express()
@@ -50,7 +64,7 @@ app.use(express.json()) //JSON
 app.use(cookieParser())
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: `mongodb+srv://${process.env.USER_BD}:${process.env.PASS_BD}@clusterpm.2bebn.mongodb.net/sessions`,
+        mongoUrl: `mongodb+srv://pablosm94:coderhouse@clusterpm.2bebn.mongodb.net/sessions`,
         mongoOptions: advancedOptions
     }),
     secret: 'mongoAtlasSecret',
@@ -114,17 +128,23 @@ passport.use('registro', new LocalStrategy ({
             
         }
         catch(error){
+            console.log(error)
             return done("error")
         }
 }))
 //registro
 
-app.post('/register', passport.authenticate('registro',{
+app.post('/register', (req,res,next) => {
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
+    next()
+}, passport.authenticate('registro',{
     failureRedirect: '/failRegister',
     successRedirect: '/successRegister',
 }))
 
 app.post('/failRegister',(req,res)=>{
+    logger.error(`Fallo en el registro`)
     res.json({status: "error", msg:`Registro fallido` })
 })
 app.post('/successRegister',(req,res)=>{
@@ -185,12 +205,21 @@ passport.use('login', new LocalStrategy ({passReqToCallback: true}, async (req,u
 //login
 
 
-app.get('/login',passport.authenticate('login',{
+app.get('/login', (req,res,next) => {
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
+    next()
+},
+    passport.authenticate('login',{
     failureRedirect: '/failLogin',
     successRedirect: '/successLogin',
-}))
+}
+), 
+)
 
 app.get('/failLogin', (req,res)=>{
+    
+    logger.error(`Login fallido`)
     res.json({status: "error", msg:`Login fallido` })
 })
 
@@ -214,12 +243,22 @@ app.get('/successLogin', (req,res)=>{
 //     }
 // })
 //logout
-app.get('/logout', (req,res)=>{
+app.get('/logout', (req,res,next)=>{
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
     if (req.isAuthenticated()){
-        req.logout()
+        req.logout(function(err) {
+            if (err) { return next(err)}
+        })
+        next()
     }
+    else{
+        res.json(`Usuario no logueado`)
+    }
+},(req,res)=>{
     res.json(`Usuario deslogeado`)
-})
+}
+)
 // app.get('/logout', (req, res) => {
 //     req.session.destroy(err => {
 //         if (!err) res.json({status:"ok", msg:"Logout ok!"})
@@ -230,22 +269,28 @@ app.get('/logout', (req,res)=>{
 const middleware = {
     estaLogeado: function(req,res,next){
         console.log(req.session.name)
-        if (req.session.name) return next()
-        res.json({status: "error", msg:"usuario sin logear"})
+        if(req.isAuthenticated()){
+            //req.isAuthenticated() will return true if user is logged in
+            next()}
+        else{
+            res.json({status: "error", msg:"usuario sin logear"})
+        }
+        
     }
 }
 
 
 app.get('/log', middleware.estaLogeado , (req,res)=>{
-    res.json({status:"ok", name: `${req.session.name}`})
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
+    console.log(req.session)
+    res.json({status:"ok", name: `${req.session.passport.user.username}`})
 })
 
 // let productos = []; //Cambiar persistencia a MariaDB / MySQL
 // let mensajes = [];  //Cambiar persistencia a SQLite3
 
-const server = httpServer.listen(PORT, ()=>{console.log("servidor escuchando en el puerto "+ server.address().port)})
 
-server.on("error", error => console.log("Error en servidor"+error))
 
 
 io.on('connection', (socket)=>{
@@ -301,7 +346,9 @@ io.on('connection', (socket)=>{
 })
 
 //----------Variables de entorno--------------
-app.get('/info', (req,res)=>{
+app.get('/infozip',compression(), (req,res)=>{
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
     let datos = []
     //Argumentos de entrarada
     datos.push({argumentosEntrada: argv})
@@ -317,11 +364,51 @@ app.get('/info', (req,res)=>{
     datos.push({processID: process.pid})
     //Carpeta del proyecto
     datos.push({carpetadeProyecto: process.argv[1]})
-
-    res.send(datos)
+    
+    //Numero de procesadores presentes en el servidor
+    datos.push({numerodeProcesadores: numCPUs})
+    console.log(datos)
+    res.send((JSON.stringify(datos)).repeat(1000))
 })
 
+app.get('/info', (req,res)=>{
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
+    let datos = []
+    //Argumentos de entrarada
+  
+    datos.push({argumentosEntrada: argv})
+    //nombre de la plataforma (SO)
+   
+    datos.push({nombrePlataforma: process.env.OS})
+    //Version de nodejs
+   
+    datos.push({nodeJSVersion: process.versions.node})
+    //Memoria total reservada (Rss)
+    
+    datos.push({memoriaReservada: process.memoryUsage().rss})
+    //path de ejecucion
+    
+    datos.push({pathEjecucion: process.env.Path})
+    //processid
+    
+    datos.push({processID: process.pid})
+    //Carpeta del proyecto
+    
+    datos.push({carpetadeProyecto: process.argv[1]})
+    
+    //Numero de procesadores presentes en el servidor
+    
+    datos.push({numerodeProcesadores: numCPUs})
+
+    res.send(datos)
+    //res.send((JSON.stringify(datos)).repeat(1000))
+})
+
+
 app.get('/api/randoms', (req,res)=>{
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
     let cantidad
     if (req.query.cant){
         cantidad = req.query.cant
@@ -329,19 +416,64 @@ app.get('/api/randoms', (req,res)=>{
         cantidad = 100000000
     }
     
-    const calculo = fork('./random.js')
+    //Desactivado el modo child process
+    // const calculo = fork('./random.js')
     
-    calculo.on('message', data => {
-        if (data=="Listo para recibir"){
-            calculo.send(cantidad)
-        }
-        else{
-            res.end(JSON.stringify(data))
-        }
-        console.log(data)
+    // calculo.on('message', data => {
+    //     if (data=="Listo para recibir"){
+    //         calculo.send(cantidad)
+    //     }
+    //     else{
+    //         res.end(JSON.stringify(data))
+    //     }
+    //     console.log(data)
+    // })
+    let miarray = Array.from({length: data}, () => Math.floor(Math.random() * 10))
+    console.log(miarray)
+    let repetidos = {};
+    miarray.forEach(function(numero){
+    repetidos[numero] = (repetidos[numero] || 0) + 1;
     })
-
     
 
 })
 
+if (argv.modo === "CLUSTER"){
+    console.log("servidor ... en modo CLUSTER")
+    if(cluster.isPrimary){
+        for (let i=0;i<4;i++){
+            cluster.fork()
+        }
+        cluster.on('exit',(worker,code,signal)=>{
+            console.log(`${worker.process.pid} died`)
+        })
+    }else{
+        const server = httpServer.listen(PORT, ()=>{console.log("servidor escuchando en el puerto "+ server.address().port)})
+        server.on("error", error => console.log("Error en servidor"+error))
+        console.log(`${process.pid} started`)
+    }
+    
+}
+else{
+    const server = httpServer.listen(PORT, ()=>{console.log("servidor escuchando en el puerto "+ server.address().port)})
+    server.on("error", error => console.log("Error en servidor"+error))
+    console.log("servidor creado en modo FORK")
+}
+
+//Loggers
+import winston from 'winston'
+
+const logger = winston.createLogger({
+    transports : [
+        new winston.transports.Console({level:'info'}),
+        new winston.transports.File({ filename:'warn.log', level:'warn'}),
+        new winston.transports.File({ filename:'error.log', level:'error'})
+    ]
+})
+
+app.all('*',(req,res)=>{
+    const {url , method} = req
+    logger.info(`Peticion ${url}, metodo ${method}`)
+    logger.warn(`Ruta ${url} inexistente`)
+    res.send("Ruta inexistente")
+})
