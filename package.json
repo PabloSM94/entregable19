@@ -5,7 +5,7 @@
     "requires": true,
     "main": "servidor.js",
     "scripts": {
-        "start": "nodemon servidor.js"
+        "start": "nodemon src/servidor.js"
     },
     "dependencies": {
         "@faker-js/faker": "^7.2.0",
