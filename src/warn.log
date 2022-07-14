@@ -3,3 +3,6 @@
 {"level":"warn","message":"Ruta /login inexistente"}
 {"level":"error","message":"Login fallido"}
 {"level":"warn","message":"Ruta /hola inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
