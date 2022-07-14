@@ -477,3 +477,7 @@ app.all('*',(req,res)=>{
     logger.warn(`Ruta ${url} inexistente`)
     res.send("Ruta inexistente")
 })
+
+app.get('/',(req,res)=>{
+    res.send('Bienvenido a la API')
+})
