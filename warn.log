@@ -6,3 +6,57 @@
 {"level":"warn","message":"Ruta /favicon.ico inexistente"}
 {"level":"warn","message":"Ruta /registro inexistente"}
 {"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /index.html inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /register inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /register inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /register inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"warn","message":"Ruta /js/registro.js inexistente"}
+{"level":"warn","message":"Ruta /favicon.ico inexistente"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"Alerta! URL: /api/registro/register inexistente"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"Alerta! URL: /api/logeo/login inexistente"}
+{"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"ERROR! /failLogin"}

@@ -1,4 +1,4 @@
-import {generarProducto} from '../../faker/generadordeProductos.js'
+import {generarProducto} from '../faker/generadordeProductos.js'
 
 async function verProductos(){
     let productos = []

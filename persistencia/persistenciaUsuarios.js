@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 const uri = config.mongodb.cnxStr;
 const client = new MongoClient(uri);
 
-import config from '../config.js'
+import config from '../src/config.js'
 
 await client.connect();
 
