@@ -60,3 +60,4 @@
 {"level":"error","message":"Alerta! URL: /api/logeo/login inexistente"}
 {"level":"error","message":"ERROR! /failLogin"}
 {"level":"error","message":"ERROR! /failLogin"}
+{"level":"error","message":"Alerta! URL: /api/productos/productos-test inexistente"}

@@ -1,8 +1,8 @@
 //Crear tabla en MySQL para productos
-import {options} from './mySQL.js'
+import {options} from './mySQLconfig.js'
 import knex from "knex"
 //Crear tabla en MySQL para mensajes
-import {optionsSQLite} from './mySQL.js'
+import {optionsSQLite} from './mySQLconfig.js'
 
 const knex1 = knex(options)
 const knex2 = knex(optionsSQLite)

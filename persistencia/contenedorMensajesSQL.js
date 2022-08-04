@@ -13,19 +13,6 @@ async function cargarMensajes(tabla){
     return mensajes
 }
 
-
-async function cargarMensajes2(tabla){
-    let mensajes = []
-    await knex2.from(`${tabla}`).select("*")
-        .then((rows)=>{
-            for (const row of rows){
-                mensajes.push(row)
-            }
-            
-        })
-    return mensajes
-}
-
 async function guardarMensaje(msg){
     msg.fecha = new Date().toLocaleString();
     console.log(msg);
@@ -34,4 +21,4 @@ async function guardarMensaje(msg){
                 console.log("mensaje guardado")
             })
 }
-export {cargarMensajes,cargarMensajes2,guardarMensaje}
+export {cargarMensajes,guardarMensaje}
