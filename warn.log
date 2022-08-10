@@ -61,3 +61,12 @@
 {"level":"error","message":"ERROR! /failLogin"}
 {"level":"error","message":"ERROR! /failLogin"}
 {"level":"error","message":"Alerta! URL: /api/productos/productos-test inexistente"}
+{"level":"error","message":"Alerta! URL: /api/registro/failRegister inexistente"}
+{"level":"error","message":"Alerta! URL: /api/registro/successRegister inexistente"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}
+{"level":"error","message":"ERROR! /failRegister"}

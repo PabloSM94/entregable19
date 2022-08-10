@@ -10,6 +10,7 @@
     "dependencies": {
         "@faker-js/faker": "^7.2.0",
         "artillery": "^2.0.0-20",
+        "axios": "^0.27.2",
         "compression": "^1.7.4",
         "connect-mongo": "^4.6.0",
         "cookie-parser": "^1.4.6",
@@ -19,6 +20,7 @@
         "gzip": "^0.1.0",
         "io": "^1.0.5",
         "knex": "^2.2.0",
+        "mocha": "^10.0.0",
         "mysql": "^2.18.1",
         "nodemon": "^2.0.16",
         "passport": "^0.6.0",

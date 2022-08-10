@@ -55,13 +55,13 @@ routerRegistro.post('/register',
     })
 )
 
-routerRegistro.post('/failRegister',
+routerRegistro.get('/failRegister',
     middleLogError,
     (req, res) => {
         res.json({ status: "error", msg: `Registro fallido` })
     }
 )
-routerRegistro.post('/successRegister', 
+routerRegistro.get('/successRegister', 
     (req, res) => {
         res.json({ status: "ok", name: `username:${req.body.username}` })
     }
