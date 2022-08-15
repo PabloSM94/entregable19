@@ -1,7 +1,6 @@
 export const buildMensaje = class {
     #id
     #nombre
-
     #text
     constructor(id,nombre,text){
         this.#id = id

@@ -23,7 +23,7 @@ import { middleInfo, middleWarning, middleLogError } from './servicio/loggers.js
 import {  Server as IOServer } from 'socket.io'
 import { socketProductos } from './ruteo/routerProductos.js'
 import { socketMensajes } from './ruteo/routerMensajes.js'
-
+import { middlewareGraphQL } from './ruteo/graphql.js'
 
 //Declaracion de variables
 const app = express()
@@ -60,6 +60,7 @@ app.use('/api/registro', routerRegistro)
 app.use('/api/logeo', routerLogin)
 app.use('/api/info', routerInfo)
 app.use('/api/misc', routerMisc)
+app.use('/graphql', middlewareGraphQL)
 
 //Websockets
 io.on('connection', async (socket)=>{
